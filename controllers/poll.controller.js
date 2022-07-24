@@ -1,18 +1,23 @@
 const {
   responseServer,
   StatusCodeHTTP,
-  StatusCodeDomain,
-} = require('../shared/utils/http-request');
-const { PollRepository, QuestionRepository } = require('../core/models/repositories');
-const { paramsForVerifyBeforeCreate, UserType } = require('../shared/utils/database-sequelize');
+  StatusCodeDomain
+} = require("../shared/utils/http-request");
+const {
+  PollRepository,
+  QuestionRepository
+} = require("../core/models/repositories");
+const {
+  paramsForVerifyBeforeCreate,
+  UserType
+} = require("../shared/utils/database-sequelize");
 
-const { addParamsToAllObjects } = require('../shared/utils/arrays');
+const { addParamsToAllObjects } = require("../shared/utils/arrays");
 
+const { sequelize: sequelizeInstance } = require("../core/database/sequelize");
 
-const { sequelize: sequelizeInstance } = require('../core/database/sequelize');
-
-const { mapperPoll, mapperPolls } = require('../shared/dtos/poll.dto');
-const entityPoll = 'Encuesta';
+const { mapperPoll, mapperPolls } = require("../shared/dtos/poll.dto");
+const entityPoll = "Encuesta";
 
 const getPollById = async (req, res) => {
   try {
@@ -20,7 +25,11 @@ const getPollById = async (req, res) => {
     let pollFind = mapperPoll(await PollRepository.getPollById(PollId));
     return responseServer(res, pollFind);
   } catch (error) {
-    return responseServer(res, error, StatusCodeHTTP.INTERNAL_SERVER_ERROR_HTTP);
+    return responseServer(
+      res,
+      error,
+      StatusCodeHTTP.INTERNAL_SERVER_ERROR_HTTP
+    );
   }
 };
 
@@ -29,7 +38,11 @@ const getAllPolls = async (req, res) => {
     let polls = mapperPolls(await PollRepository.getAllPolls());
     return responseServer(res, polls);
   } catch (error) {
-    return responseServer(res, error, StatusCodeHTTP.INTERNAL_SERVER_ERROR_HTTP);
+    return responseServer(
+      res,
+      error,
+      StatusCodeHTTP.INTERNAL_SERVER_ERROR_HTTP
+    );
   }
 };
 /* const getPollById = async (req, res) => {
@@ -59,7 +72,7 @@ const registerPoll = async (req, res) => {
 
       await QuestionRepository.registerMultiplyQuestion(Questions);
 
-      return { success: true, message: 'Encuesta registrado correctamente' };
+      return { success: true, message: "Encuesta registrado correctamente" };
     });
     let { success = false } = transaction;
     if (success) {
@@ -67,7 +80,11 @@ const registerPoll = async (req, res) => {
     }
     return responseServer(res, entityPoll, StatusCodeDomain.TRANSACTION_ERROR);
   } catch (error) {
-    return responseServer(res, error, StatusCodeHTTP.INTERNAL_SERVER_ERROR_HTTP);
+    return responseServer(
+      res,
+      error,
+      StatusCodeHTTP.INTERNAL_SERVER_ERROR_HTTP
+    );
   }
 };
 
