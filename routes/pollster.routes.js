@@ -7,6 +7,7 @@ function manageRouterPollster(io) {
   // API END-POINTS: GET
   router.get("/", PollsterController.getAllPollsters);
   router.get("/:pollsterId", PollsterController.getPollsterById);
+  router.get("/random/points", PollsterController.generateRandomLocation);
 
   //router.get('/:', NannyController.getNannyById);
 

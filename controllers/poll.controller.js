@@ -33,6 +33,20 @@ const getPollById = async (req, res) => {
   }
 };
 
+const getAllPollsByUserId = async (req, res) => {
+  try {
+    let { userId: UserId } = req.params;
+    let polls = mapperPolls(await PollRepository.getPollsByUserId(UserId));
+    return responseServer(res, polls);
+  } catch (error) {
+    return responseServer(
+      res,
+      error,
+      StatusCodeHTTP.INTERNAL_SERVER_ERROR_HTTP
+    );
+  }
+};
+
 const getAllPolls = async (req, res) => {
   try {
     let polls = mapperPolls(await PollRepository.getAllPolls());
@@ -91,5 +105,6 @@ const registerPoll = async (req, res) => {
 module.exports = {
   registerPoll,
   getPollById,
-  getAllPolls
+  getAllPolls,
+  getAllPollsByUserId
 };

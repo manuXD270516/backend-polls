@@ -4,7 +4,8 @@ const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: ["http://localhost:4200"]
+    origin: ["*"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
   }
   /* allowRequest: (req, callback) => {
     const noOriginHeader = req.headers.origin === undefined;

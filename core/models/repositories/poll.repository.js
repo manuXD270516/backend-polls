@@ -1,16 +1,16 @@
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 const {
   paramsDeleted,
   paramsUpdated,
   finalQuery,
-  parameterizePagination,
-} = require('../../../shared/utils/database-sequelize');
+  parameterizePagination
+} = require("../../../shared/utils/database-sequelize");
 
-const { sequelize } = require('../../database/sequelize');
+const { sequelize } = require("../../database/sequelize");
 
-const Poll = require('../Poll');
-const Question = require('../Question');
-const Users = require('../Users');
+const Poll = require("../Poll");
+const Question = require("../Question");
+const Users = require("../Users");
 
 /**
  * Listado de encuestas
@@ -20,12 +20,29 @@ const getAllPolls = async () => {
   let polls = await Poll.findAll({
     include: [
       {
-        model: Users,
+        model: Users
       },
+
       {
         model: Question,
-      },
-    ],
+        separate: true
+      }
+    ]
+  });
+  return polls;
+};
+
+const getPollsByUserId = async (UserId) => {
+  let polls = await Poll.findAll({
+    where: {
+      UserId
+    },
+    include: [
+      {
+        model: Question,
+        separate: true
+      }
+    ]
   });
   return polls;
 };
@@ -35,8 +52,9 @@ const getPollById = async (PollId) => {
     include: [
       {
         model: Question,
-      },
-    ],
+        separate: true
+      }
+    ]
   });
   return poll;
 };
@@ -52,8 +70,8 @@ const registerPoll = async (pollFields) => {
 const pollExists = async (fields) => {
   return await Poll.findOne({
     where: {
-      [Op.or]: fields,
-    },
+      [Op.or]: fields
+    }
   });
 };
 
@@ -74,4 +92,5 @@ module.exports = {
   registerPoll,
   pollExists,
   getPollById,
+  getPollsByUserId
 };

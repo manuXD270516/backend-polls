@@ -63,16 +63,14 @@ const getPollsterById = async (PollsterId) => {
     include: [
       {
         model: Users,
-        /* where: {
-          PollsterId,
-        }, */
         include: [
           {
             model: Poll,
-            required: false,
+            separate: true,
             include: [
               {
-                model: Question
+                model: Question,
+                separate: true
               }
             ]
           }
