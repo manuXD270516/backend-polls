@@ -9,6 +9,8 @@ const mapperPoll = (poll) => {
     Datebirth: "Datebirth",
     Address: "Address",
     AudioEncode: "AudioEncode",
+    Latitude: "Latitude",
+    Longitude: "Longitude",
     Questions: "Questions"
   };
 
@@ -25,6 +27,8 @@ const mapperPolls = (poll) => {
     Address: "Address",
     AudioEncode: "AudioEncode",
     User: "User",
+    Latitude: "Latitude",
+    Longitude: "Longitude",
     Questions: "Questions"
   };
 
