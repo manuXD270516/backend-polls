@@ -22,7 +22,6 @@ const getAllPolls = async () => {
       {
         model: Users
       },
-
       {
         model: Question,
         separate: true

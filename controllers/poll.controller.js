@@ -53,6 +53,7 @@ const getAllPollsByUserId = async (req, res) => {
 const getAllPolls = async (req, res) => {
   try {
     let polls = mapperPolls(await PollRepository.getAllPolls());
+    //let polls = await PollRepository.getAllPolls();
     return responseServer(res, polls);
   } catch (error) {
     return responseServer(
