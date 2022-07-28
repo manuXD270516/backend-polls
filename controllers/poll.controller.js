@@ -125,7 +125,11 @@ const registerPoll = async (req, res) => {
 
       await QuestionRepository.registerMultiplyQuestion(Questions);
 
-      return { success: true, message: "Encuesta registrado correctamente" };
+      return {
+        success: true,
+        message: "Encuesta registrado correctamente",
+        pollIdCreated: PollId
+      };
     });
     let { success = false } = transaction;
     if (success) {
