@@ -13,7 +13,7 @@ const uploadFile = async (file) => {
       resolve({
         fileUploaded: true,
         message: "file uploaded successfully",
-        route: `/upload/audio/${file.name}`
+        route: `/upload/audio/${fileName}`
       });
     });
   });
