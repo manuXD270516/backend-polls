@@ -86,6 +86,7 @@ const uploadAudioPoll = async (req, res) => {
       let { fileUploaded, route = null } = await UploadFileService.uploadFile(
         file
       );
+      console.log("response file upload => ", fileUploaded);
       if (!fileUploaded) {
         return {
           success: false,
@@ -93,6 +94,7 @@ const uploadAudioPoll = async (req, res) => {
             "Error al cargar el audio, revisar al configuracion del servidor de archivos estaticos "
         };
       }
+      console.log(route);
       await editPoll({ PollId, AudioEncode: route });
       return { success: true, message: "Audio cargado correctamente" };
     });

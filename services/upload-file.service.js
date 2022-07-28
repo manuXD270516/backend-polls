@@ -1,9 +1,12 @@
 const AUDIO_POLLS_FOLDER = "./public/upload/audio";
+const { v4: uuidv4 } = require("uuid");
 
 const uploadFile = async (file) => {
   return new Promise((resolve, reject) => {
-    let fileName = file.name;
-    file.mv(`${AUDIO_POLLS_FOLDER}/${fileName}`, (err) => {
+    let fileName = `${file.name}-${uuidv4()}`;
+    const path = `${AUDIO_POLLS_FOLDER}/${fileName}`;
+    console.log(path);
+    file.mv(path, (err) => {
       if (err) {
         reject({ fileUploaded: false, message: err });
       }
