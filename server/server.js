@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const upload = require("express-fileupload");
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
@@ -17,6 +18,7 @@ const cors = require("cors");
 const config = require("../config/environments");
 
 const routerIndex = require("../routes/index.routes")(io);
+app.use(upload());
 app.use(routerIndex);
 // public route
 app.use(express.static(path.resolve(__dirname, "../public")));

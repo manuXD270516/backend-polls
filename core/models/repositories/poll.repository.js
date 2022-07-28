@@ -32,6 +32,14 @@ const getAllPolls = async () => {
   return polls;
 };
 
+const editPoll = async ({ PollId, ...pollFields }) => {
+  pollFields = { ...pollFields, ...paramsUpdated() };
+  let updated = await Poll.update(pollFields, {
+    where: { PollId }
+  });
+  return updated[0];
+};
+
 const getPollsByUserId = async (UserId) => {
   let polls = await Poll.findAll({
     where: {
@@ -92,5 +100,6 @@ module.exports = {
   registerPoll,
   pollExists,
   getPollById,
-  getPollsByUserId
+  getPollsByUserId,
+  editPoll
 };

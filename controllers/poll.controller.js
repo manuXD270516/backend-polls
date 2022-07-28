@@ -12,11 +12,14 @@ const {
   UserType
 } = require("../shared/utils/database-sequelize");
 
+const { UploadFileService } = require("../services");
+
 const { addParamsToAllObjects } = require("../shared/utils/arrays");
 
 const { sequelize: sequelizeInstance } = require("../core/database/sequelize");
 
 const { mapperPoll, mapperPolls } = require("../shared/dtos/poll.dto");
+const { editPoll } = require("../core/models/repositories/poll.repository");
 const entityPoll = "Encuesta";
 
 const getPollById = async (req, res) => {
@@ -72,15 +75,50 @@ const getAllPolls = async (req, res) => {
   }
 }; */
 
+const uploadAudioPoll = async (req, res) => {
+  try {
+    let {
+      files: { file },
+      params: { pollId: PollId }
+    } = req;
+    let transaction = await sequelizeInstance.transaction(async (t) => {
+      let { fileUploaded, route = null } = await UploadFileService.uploadFile(
+        file
+      );
+      if (!fileUploaded) {
+        return {
+          success: false,
+          message:
+            "Error al cargar el audio, revisar al configuracion del servidor de archivos estaticos "
+        };
+      }
+      await editPoll({ PollId, AudioEncode: route });
+      return { success: true, message: "Audio cargado correctamente" };
+    });
+    // Upload file
+    let { success = false } = transaction;
+    if (success) {
+      return responseServer(res, transaction);
+    }
+    return responseServer(res, entityPoll, StatusCodeDomain.TRANSACTION_ERROR);
+  } catch (error) {
+    return responseServer(
+      res,
+      error,
+      StatusCodeHTTP.INTERNAL_SERVER_ERROR_HTTP
+    );
+  }
+};
+
 const registerPoll = async (req, res) => {
   try {
     let { body: pollBody } = req;
 
     let transaction = await sequelizeInstance.transaction(async (t) => {
-      // Register Header Employee
+      // Register header Poll
       let { PollId } = await PollRepository.registerPoll(pollBody);
 
-      // Register User
+      // Register Questions
       let { Questions } = pollBody;
       Questions = addParamsToAllObjects(Questions, { PollId });
 
@@ -106,5 +144,6 @@ module.exports = {
   registerPoll,
   getPollById,
   getAllPolls,
-  getAllPollsByUserId
+  getAllPollsByUserId,
+  uploadAudioPoll
 };

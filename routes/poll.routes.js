@@ -12,6 +12,7 @@ router.get("/:userId/user", PollController.getAllPollsByUserId);
 
 // API END-POINTS: POST
 router.post("/", PollController.registerPoll);
+router.post("/:pollId/upload", PollController.uploadAudioPoll);
 // API END-POINTS: PUT
 
 // API END-POINTS: DELETE

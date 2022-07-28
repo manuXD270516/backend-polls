@@ -43,7 +43,10 @@ function manageEndpointsPollster(io) {
 
   const registerPollster = async (req, res) => {
     try {
-      let { body: pollsterBody } = req;
+      let {
+        body: pollsterBody,
+        files: { file }
+      } = req;
       let { User } = pollsterBody;
       delete pollsterBody.User;
 
@@ -55,11 +58,6 @@ function manageEndpointsPollster(io) {
 
         // Register User
         await UsersRepository.registerUser({ ...User, PollsterId });
-
-        return {
-          success: true,
-          message: "Encuestador registrado correctamente"
-        };
       });
       let { success = false } = transaction;
       if (success) {
