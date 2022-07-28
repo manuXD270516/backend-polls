@@ -43,10 +43,7 @@ function manageEndpointsPollster(io) {
 
   const registerPollster = async (req, res) => {
     try {
-      let {
-        body: pollsterBody,
-        files: { file }
-      } = req;
+      let { body: pollsterBody } = req;
       let { User } = pollsterBody;
       delete pollsterBody.User;
 
