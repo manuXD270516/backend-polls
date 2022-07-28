@@ -55,6 +55,11 @@ function manageEndpointsPollster(io) {
 
         // Register User
         await UsersRepository.registerUser({ ...User, PollsterId });
+
+        return {
+          success: true,
+          message: "Encuestador registrado correctamente"
+        };
       });
       let { success = false } = transaction;
       if (success) {
