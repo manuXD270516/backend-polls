@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const uploadFile = async (file) => {
   return new Promise((resolve, reject) => {
-    let fileName = `${file.name}-${uuidv4()}`;
+    let fileName = `${file.name}`;
     const path = `${AUDIO_POLLS_FOLDER}/${fileName}`;
     console.log(path);
     file.mv(path, (err) => {
